@@ -26,8 +26,9 @@ public class Account {
 	private int imageId;
 	@OneToOne(cascade = CascadeType.ALL)
 	private User user;
-	private  List<Post> posts;
 	@OneToMany(cascade = CascadeType.ALL)
-	private Message message;
+	private  List<PostClass> posts;
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Message> message;
 	
 }

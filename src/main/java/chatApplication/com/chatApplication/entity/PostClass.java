@@ -17,7 +17,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-public class Post {
+public class PostClass {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int postId;
@@ -25,7 +25,7 @@ public class Post {
 	private String postName;
 	private String postText;
 	@OneToMany(cascade = CascadeType.ALL)
-	private Like like;
+	private List<LikeClass> post_like;
 	@OneToMany(cascade =CascadeType.ALL)
 	private List<Comment> comment;
 }
