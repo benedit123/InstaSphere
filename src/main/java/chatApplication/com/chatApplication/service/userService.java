@@ -28,4 +28,41 @@ public class userService {
 	    structure.setData(userdto);
 	    return new  ResponseEntity<ResponseStructure<UserDto>>(structure,HttpStatus.CREATED);
 	}
+	public ResponseEntity<ResponseStructure<User>> findUser(int  userId)
+	{
+		ResponseStructure<User> structure=new ResponseStructure<>();
+		User Exuser=dao.findUser(userId);
+		if (Exuser!=null)
+		{
+			structure.setMessage("user found");
+			structure.setStatus(HttpStatus.FOUND.value());
+			structure.setData(Exuser);
+			return new ResponseEntity<ResponseStructure<User>>(structure,HttpStatus.FOUND);
+		}
+		return null;
+	}
+	 public ResponseEntity<ResponseStructure<User>> deleteUser(int UserId) {
+			ResponseStructure<User> structure =new ResponseStructure<>();
+			User user = dao.findUser(UserId);
+			if (user!=null) {
+			structure.setMessage("deleted success fully");
+			structure.setStatus(HttpStatus.OK.value());
+			structure.setData(dao.deleteUser(UserId));
+			return new ResponseEntity<ResponseStructure<User>>(structure,HttpStatus.OK);
+			}
+			return null;
+		}
+	 public ResponseEntity<ResponseStructure<User>> updateUser(int userId , User user) {
+		ResponseStructure<User> structure =new ResponseStructure<>();
+		User exuser=dao.findUser(userId);
+		if (exuser!=null) {
+			structure.setMessage("update sucess fully");
+			structure.setStatus(HttpStatus.OK.value());
+			structure.setData(dao.updateUser(user, userId));
+			return new ResponseEntity<ResponseStructure<User>>(structure,HttpStatus.OK);
+		}
+		return null;
+		
+		
+	}
 }

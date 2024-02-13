@@ -2,9 +2,13 @@ package chatApplication.com.chatApplication.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import chatApplication.com.chatApplication.dto.UserDto;
@@ -20,5 +24,20 @@ public class UserController {
 @PostMapping
 public ResponseEntity<ResponseStructure<UserDto>> saveUser(@RequestBody User user) {
 	return service.saveUser(user);
+}
+@GetMapping
+public ResponseEntity<ResponseStructure<User>> findUser(@RequestParam int userId)
+{
+	return service.findUser(userId);
+}
+@DeleteMapping
+public ResponseEntity<ResponseStructure<User>> deleteUser(@RequestParam int userId)
+{
+	return service.deleteUser(userId);
+}
+@PutMapping
+public ResponseEntity<ResponseStructure<User>> updateUser(@RequestBody User user ,@RequestParam int userId)
+{
+	return service.updateUser(userId, user);
 }
 }
