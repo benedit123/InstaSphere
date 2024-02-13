@@ -6,8 +6,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import chatApplication.com.chatApplication.dao.AccountDao;
 import chatApplication.com.chatApplication.dao.UserDao;
 import chatApplication.com.chatApplication.dto.UserDto;
+import chatApplication.com.chatApplication.entity.Account;
 import chatApplication.com.chatApplication.entity.User;
 import chatApplication.com.chatApplication.util.ResponseStructure;
 
@@ -16,6 +18,8 @@ public class userService {
 
 	@Autowired
 	UserDao dao;
+	@Autowired
+	AccountDao Adao;
 	
 	public ResponseEntity<ResponseStructure<UserDto>> saveUser(User user)
 	{
@@ -62,7 +66,22 @@ public class userService {
 			return new ResponseEntity<ResponseStructure<User>>(structure,HttpStatus.OK);
 		}
 		return null;
-		
-		
 	}
+	 public ResponseEntity<ResponseStructure<User>> assignaccountToUser(int accountId,int userId)
+	 {
+		 User exUser=dao.findUser(userId);
+		 Account exAccount=Adao.findAccount(accountId);
+		 if (exUser!=null) {
+			if (exAccount!=null) {
+				exUser.setAccount(exAccount);
+				ResponseStructure<User> structure =new ResponseStructure<>();
+				structure.setMessage("account assigned success fully");
+				structure.setStatus(HttpStatus.OK.value());
+				structure.setData(dao.updateUser(exUser, exUser.getUserId()));
+				return new ResponseEntity<ResponseStructure<User>>(structure,HttpStatus.OK);
+			}
+			return null;
+		}
+		 return null;
+	 }
 }

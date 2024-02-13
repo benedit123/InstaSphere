@@ -40,4 +40,9 @@ public ResponseEntity<ResponseStructure<User>> updateUser(@RequestBody User user
 {
 	return service.updateUser(userId, user);
 }
+@PutMapping("assignacountuser")
+public ResponseEntity<ResponseStructure<User>> assignaccountToUser(@RequestParam int accountId,@RequestParam int userId)
+{
+	return service.assignaccountToUser(accountId, userId);
+}
 }

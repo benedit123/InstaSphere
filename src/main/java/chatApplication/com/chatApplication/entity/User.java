@@ -24,4 +24,10 @@ public class User {
 	private String userPass;
 	@OneToOne(cascade = CascadeType.ALL)
 	private Account account;
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", userName=" + userName + ", Email=" + Email + ", userPass=" + userPass
+				+ "]";
+	}
+	
 }

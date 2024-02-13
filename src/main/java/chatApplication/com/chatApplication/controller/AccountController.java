@@ -39,6 +39,12 @@ public class AccountController {
 	@PutMapping
 	public ResponseEntity<ResponseStructure<Account>> updateUser(@RequestBody Account account ,@RequestParam int accountId)
 	{
+		
 		return service.updateAccount(account, accountId);
 	}
+//	@PutMapping("assigntoaccount")
+//	public ResponseEntity<ResponseStructure<Account>> assignuserToAccount(int accountId,int userId )
+//	{
+//		return service.assignuserToAccount(accountId, userId);
+//	}
 }
