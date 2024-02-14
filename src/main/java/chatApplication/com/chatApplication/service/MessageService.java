@@ -1,11 +1,12 @@
 package chatApplication.com.chatApplication.service;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import chatApplication.com.chatApplication.dao.AccountDao;
 import chatApplication.com.chatApplication.dao.MessageDao;
+import chatApplication.com.chatApplication.entity.Account;
 import chatApplication.com.chatApplication.entity.Message;
 import chatApplication.com.chatApplication.util.ResponseStructure;
 
@@ -14,6 +15,8 @@ public class MessageService {
 
 	@Autowired
 	MessageDao dao;
+	@Autowired
+	AccountDao adao;
 	
 	public ResponseEntity<ResponseStructure<Message>> saveMessage(Message message)
 	{
@@ -59,5 +62,21 @@ public class MessageService {
 			return new ResponseEntity<ResponseStructure<Message>>(structure,HttpStatus.OK);
 		}
 		return null;
+	}
+	public ResponseEntity<ResponseStructure<Message>> messageToaccount(int accountId,int messageId)
+	{
+		Message message=dao.findMessage(messageId);
+		Account account=adao.findAccount(accountId);
+				
+		if (account!=null) {
+			if (message!=null) {
+					message.setAccountmess(account);
+					ResponseStructure<Message> structure = new ResponseStructure<>();
+					structure.setMessage("post assigned successfully");
+					structure.setStatus(HttpStatus.OK.value());
+					structure.setData(dao.updatMessage(message, messageId));
+					return new ResponseEntity<ResponseStructure<Message>>(structure,HttpStatus.OK);
+			}
+		}return null;
 	}
 }

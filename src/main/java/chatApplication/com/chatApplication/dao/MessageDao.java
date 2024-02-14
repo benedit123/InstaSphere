@@ -38,7 +38,7 @@ public class MessageDao {
     	Message exMessage=findMessage(messageId);
     	if (exMessage!=null)
     	{
-			message.setUserId(messageId);
+			message.setFromUserId(messageId);
 			return messagerepo.save(message);
 		}
     	return null;

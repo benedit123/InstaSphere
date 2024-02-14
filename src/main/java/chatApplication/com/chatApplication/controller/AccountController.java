@@ -42,9 +42,20 @@ public class AccountController {
 		
 		return service.updateAccount(account, accountId);
 	}
-//	@PutMapping("assigntoaccount")
-//	public ResponseEntity<ResponseStructure<Account>> assignuserToAccount(int accountId,int userId )
-//	{
-//		return service.assignuserToAccount(accountId, userId);
-//	}
+	@PutMapping("assigntoaccount")
+	public ResponseEntity<ResponseStructure<Account>> assignuserToAccount(int accountId,int userId )
+	{
+		return service.assignuserToAccount(accountId, userId);
+	}
+	
+	@PutMapping("assignpost")
+	public ResponseEntity<ResponseStructure<Account>>  accountToPostRelation(int accountId,int postId)
+	{
+		return service.accountToPostRelation(accountId, postId);
+	}
+	@PutMapping("assignmessage")
+	public ResponseEntity<ResponseStructure<Account>>  accountTomessageRelation(@RequestParam int accountId,@RequestParam int messageId)
+	{
+		return service.accountToMessageRelation(accountId, messageId);
+	}
 }

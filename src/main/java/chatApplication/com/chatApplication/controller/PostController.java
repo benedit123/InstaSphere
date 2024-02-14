@@ -41,5 +41,16 @@ public class PostController
 	{
 		return service.updatePost(post, postId);
 	}
+	@PutMapping("assignLike")
+	public ResponseEntity<ResponseStructure<PostClass>> assignLikeToPost(@RequestParam int postId ,@RequestParam int likeId)
+	{
+		return service.assignLikeToPost(postId, likeId);
+	}
+	@PutMapping("assignComment")
+	public ResponseEntity<ResponseStructure<PostClass>> assignCommentToPost(@RequestParam int postId ,@RequestParam int commentId)
+	{
+		return service.assignCommentToPost(postId, commentId);
+	}
+	
 	
 }

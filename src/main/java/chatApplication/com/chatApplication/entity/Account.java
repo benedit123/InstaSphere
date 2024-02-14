@@ -3,6 +3,9 @@ package chatApplication.com.chatApplication.entity;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,10 +27,12 @@ public class Account {
 	private String accountName;
 	private String profileContent;
 	private int imageId;
+	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
 	private User user;
 	@OneToMany(cascade = CascadeType.ALL)
 	private  List<PostClass> posts;
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL)
 	private List<Message> message;
 	

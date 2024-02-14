@@ -43,5 +43,10 @@ public class MessageController
 	{
 		return service.updateMessage(message, messageId);
 	}
+	@PutMapping("assignMessagetoAcc")
+	public ResponseEntity<ResponseStructure<Message>> messageToaccount(int accountId,int messageId)
+	{
+		return service.messageToaccount(accountId, messageId);
+	}
 
 }
