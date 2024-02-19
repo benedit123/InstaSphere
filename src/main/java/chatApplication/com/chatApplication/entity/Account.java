@@ -13,6 +13,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,6 +26,8 @@ public class Account {
 @Id
 @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int accountId;
+@NotBlank(message = "acc name cannot be blank")
+@NotNull(message = "acc name cannot be null")
 	private String accountName;
 	private String profileContent;
 	private int imageId;

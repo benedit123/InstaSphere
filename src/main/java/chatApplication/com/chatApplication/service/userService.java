@@ -11,6 +11,8 @@ import chatApplication.com.chatApplication.dao.UserDao;
 import chatApplication.com.chatApplication.dto.UserDto;
 import chatApplication.com.chatApplication.entity.Account;
 import chatApplication.com.chatApplication.entity.User;
+import chatApplication.com.chatApplication.exception.AccountNotFoundException;
+import chatApplication.com.chatApplication.exception.UserNotFoundException;
 import chatApplication.com.chatApplication.util.ResponseStructure;
 
 @Service
@@ -43,7 +45,7 @@ public class userService {
 			structure.setData(Exuser);
 			return new ResponseEntity<ResponseStructure<User>>(structure,HttpStatus.FOUND);
 		}
-		return null;
+		throw new UserNotFoundException("user Not found with the given Id");
 	}
 	 public ResponseEntity<ResponseStructure<User>> deleteUser(int UserId) {
 			ResponseStructure<User> structure =new ResponseStructure<>();
@@ -54,7 +56,7 @@ public class userService {
 			structure.setData(dao.deleteUser(UserId));
 			return new ResponseEntity<ResponseStructure<User>>(structure,HttpStatus.OK);
 			}
-			return null;
+			throw new UserNotFoundException("user Not found with the given Id");
 		}
 	 public ResponseEntity<ResponseStructure<User>> updateUser(int userId , User user) {
 		ResponseStructure<User> structure =new ResponseStructure<>();
@@ -65,7 +67,7 @@ public class userService {
 			structure.setData(dao.updateUser(user, userId));
 			return new ResponseEntity<ResponseStructure<User>>(structure,HttpStatus.OK);
 		}
-		return null;
+		throw new UserNotFoundException("user Not found with the given Id");
 	}
 	 public ResponseEntity<ResponseStructure<User>> assignaccountToUser(int accountId,int userId)
 	 {
@@ -80,8 +82,8 @@ public class userService {
 				structure.setData(dao.updateUser(exUser, exUser.getUserId()));
 				return new ResponseEntity<ResponseStructure<User>>(structure,HttpStatus.OK);
 			}
-			return null;
+			throw new AccountNotFoundException("account not found in this given id");
 		}
-		 return null;
+		 throw new UserNotFoundException("user Not found with the given Id");
 	 }
 }

@@ -14,6 +14,8 @@ import chatApplication.com.chatApplication.entity.Account;
 import chatApplication.com.chatApplication.entity.Message;
 import chatApplication.com.chatApplication.entity.PostClass;
 import chatApplication.com.chatApplication.entity.User;
+import chatApplication.com.chatApplication.exception.AccountNotFoundException;
+import chatApplication.com.chatApplication.exception.UserNotFoundException;
 import chatApplication.com.chatApplication.util.ResponseStructure;
 
 @Service
@@ -47,7 +49,7 @@ public class AccountService {
 			structure.setData(exAccount);
 			return new ResponseEntity<ResponseStructure<Account>>(structure,HttpStatus.FOUND);
 		}
-		return null;
+		throw new AccountNotFoundException("account not found in this given id");
 	}
 	public ResponseEntity<ResponseStructure<Account>> deleteAccount(int accountId)
 	{
@@ -59,7 +61,7 @@ public class AccountService {
 			structure.setData(dao.deleteAccount(accountId));
 			return new ResponseEntity<ResponseStructure<Account>>(structure,HttpStatus.OK);
 		}
-		return null;
+		throw new AccountNotFoundException("account not found in this given id");
 	}
 	public ResponseEntity<ResponseStructure<Account>> updateAccount(Account account,int accountId) {
 		ResponseStructure<Account> structure = new ResponseStructure<>();
@@ -70,7 +72,7 @@ public class AccountService {
 			structure.setData(dao.UpdateAccount(account, accountId));
 			return new ResponseEntity<ResponseStructure<Account>>(structure,HttpStatus.OK);
 		}
-		return null;
+		throw new AccountNotFoundException("account not found in this given id");
 	}
 	public ResponseEntity<ResponseStructure<Account>> assignuserToAccount( int accountId,int userId)
 	{
@@ -85,9 +87,9 @@ public class AccountService {
 				structure.setData(dao.UpdateAccount(account, account.getAccountId()));
 				return new ResponseEntity<ResponseStructure<Account>>(structure,HttpStatus.OK);
 			}
-			return null;
+			throw new UserNotFoundException("user Not found with the given Id");
 		}
-		return null;
+		throw new AccountNotFoundException("account not found in this given id");
 	}
 	public ResponseEntity<ResponseStructure<Account>> accountToPostRelation(int accountId,int postId)
 	{
@@ -104,7 +106,7 @@ public class AccountService {
 					structure.setData(dao.UpdateAccount(account, account.getAccountId()));
 					return new ResponseEntity<ResponseStructure<Account>>(structure,HttpStatus.OK);
 			}
-		}return null;
+		}throw new AccountNotFoundException("account not found in this given id");
 	}
 	public ResponseEntity<ResponseStructure<Account>> accountToMessageRelation(int messageId,int accountId)
 	{
@@ -122,6 +124,6 @@ public class AccountService {
 					structure.setData(dao.UpdateAccount(account, account.getAccountId()));
 					return new ResponseEntity<ResponseStructure<Account>>(structure,HttpStatus.OK);
 			}
-		}return null;
+		}throw new AccountNotFoundException("account not found in this given id");
 	}
 }

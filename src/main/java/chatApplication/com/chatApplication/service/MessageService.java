@@ -3,11 +3,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import chatApplication.com.chatApplication.dao.AccountDao;
 import chatApplication.com.chatApplication.dao.MessageDao;
 import chatApplication.com.chatApplication.entity.Account;
 import chatApplication.com.chatApplication.entity.Message;
+import chatApplication.com.chatApplication.exception.AccountNotFoundException;
+import chatApplication.com.chatApplication.exception.MessageNotFoundException;
 import chatApplication.com.chatApplication.util.ResponseStructure;
 
 @Service
@@ -36,7 +37,7 @@ public class MessageService {
 			structure.setData(exMessage);
 			return new ResponseEntity<ResponseStructure<Message>>(structure,HttpStatus.FOUND);
 		}
-		return null;
+		throw new MessageNotFoundException("message not found this id");
 	}
 	public ResponseEntity<ResponseStructure<Message>> deleteMessage(int messageId) 
 	{
@@ -49,7 +50,7 @@ public class MessageService {
 			structure.setData(dao.deleteMessage(messageId));
 			return new ResponseEntity<ResponseStructure<Message>>(structure,HttpStatus.OK);
 		}
-		return null;
+		throw new MessageNotFoundException("message not found this id");
 	}
 	public ResponseEntity<ResponseStructure<Message>> updateMessage(Message message , int messageId)
 	{
@@ -61,7 +62,7 @@ public class MessageService {
 			structure.setData(dao.updatMessage(message, messageId));
 			return new ResponseEntity<ResponseStructure<Message>>(structure,HttpStatus.OK);
 		}
-		return null;
+		throw new MessageNotFoundException("message not found this id");
 	}
 	public ResponseEntity<ResponseStructure<Message>> messageToaccount(int accountId,int messageId)
 	{
@@ -77,6 +78,7 @@ public class MessageService {
 					structure.setData(dao.updatMessage(message, messageId));
 					return new ResponseEntity<ResponseStructure<Message>>(structure,HttpStatus.OK);
 			}
-		}return null;
+			throw new  MessageNotFoundException("message not found");
+		}throw new AccountNotFoundException("account not found this id");
 	}
 }
