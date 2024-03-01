@@ -61,6 +61,15 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler
 		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
 	}
 	@org.springframework.web.bind.annotation.ExceptionHandler
+	public ResponseEntity<ResponseStructure<String>> emailorPassNotfound(emailOrPassWordnotFound ex)
+	{
+		ResponseStructure<String> structure=new ResponseStructure<>();
+		structure.setMessage("email or pass  dose not exist");
+		structure.setStatus(HttpStatus.NOT_FOUND.value());
+		structure.setData(ex.getmessage());
+		return new ResponseEntity<ResponseStructure<String>>(structure,HttpStatus.NOT_FOUND);
+	}
+	@org.springframework.web.bind.annotation.ExceptionHandler
 	public ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex) {
 		ResponseStructure<Object> structure = new ResponseStructure<>();
 		Map<String, String> hashmap = new HashMap<>();
@@ -74,4 +83,5 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler
 		structure.setData(hashmap);
 		return new ResponseEntity<Object>(structure, HttpStatus.BAD_REQUEST);
 }
+	
 }

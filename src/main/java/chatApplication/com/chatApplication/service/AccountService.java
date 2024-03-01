@@ -24,7 +24,7 @@ public class AccountService {
 	@Autowired
 	AccountDao dao;
 	@Autowired
-	UserDao Udao;
+	UserDao udao;
 	@Autowired
 	postDao pdao;
 	@Autowired
@@ -76,7 +76,7 @@ public class AccountService {
 	}
 	public ResponseEntity<ResponseStructure<Account>> assignuserToAccount( int accountId,int userId)
 	{
-		User user=Udao.findUser(userId);
+		User user=udao.findUser(userId);
 		Account account=dao.findAccount(accountId);
 		if (account!=null) {
 			if (user!=null) {
@@ -127,3 +127,6 @@ public class AccountService {
 		}throw new AccountNotFoundException("account not found in this given id");
 	}
 }
+
+
+//http://localhost:8080/swagger-ui/index.html

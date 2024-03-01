@@ -13,6 +13,7 @@ import chatApplication.com.chatApplication.entity.Account;
 import chatApplication.com.chatApplication.entity.User;
 import chatApplication.com.chatApplication.exception.AccountNotFoundException;
 import chatApplication.com.chatApplication.exception.UserNotFoundException;
+import chatApplication.com.chatApplication.exception.emailOrPassWordnotFound;
 import chatApplication.com.chatApplication.util.ResponseStructure;
 
 @Service
@@ -22,7 +23,7 @@ public class userService {
 	UserDao dao;
 	@Autowired
 	AccountDao Adao;
-	
+
 	public ResponseEntity<ResponseStructure<UserDto>> saveUser(User user)
 	{
 		UserDto userdto=new UserDto();
@@ -34,16 +35,19 @@ public class userService {
 	    structure.setData(userdto);
 	    return new  ResponseEntity<ResponseStructure<UserDto>>(structure,HttpStatus.CREATED);
 	}
-	public ResponseEntity<ResponseStructure<User>> findUser(int  userId)
+	public ResponseEntity<ResponseStructure<UserDto>> findUser(int  userId)
 	{
-		ResponseStructure<User> structure=new ResponseStructure<>();
+		ResponseStructure<UserDto> structure=new ResponseStructure<>();
 		User Exuser=dao.findUser(userId);
+		UserDto userdto=new UserDto();
+	    ModelMapper m1=new ModelMapper();
+	    m1.map(Exuser, userdto);
 		if (Exuser!=null)
 		{
 			structure.setMessage("user found");
 			structure.setStatus(HttpStatus.FOUND.value());
-			structure.setData(Exuser);
-			return new ResponseEntity<ResponseStructure<User>>(structure,HttpStatus.FOUND);
+			structure.setData(userdto);
+			return new ResponseEntity<ResponseStructure<UserDto>>(structure,HttpStatus.FOUND);
 		}
 		throw new UserNotFoundException("user Not found with the given Id");
 	}
@@ -86,4 +90,47 @@ public class userService {
 		}
 		 throw new UserNotFoundException("user Not found with the given Id");
 	 }
+//	 public ResponseEntity<ResponseStructure<User>> login(String userEmail,String PassWord)
+//	 {
+//		User Exemail=dao.findByemail(userEmail);
+//		System.out.println(Exemail);
+//		System.out.println(PassWord);
+//		System.out.println(Exemail.getUserPass());
+//		if (Exemail!=null)
+//		{
+//			if (Exemail.getUserPass().equals(PassWord)) {
+//				ResponseStructure<User> structure=new ResponseStructure<>();
+//				structure.setMessage("login SuccessFully");
+//				structure.setStatus(HttpStatus.FOUND.value());
+//				structure.setData(Exemail);
+//				return new ResponseEntity<ResponseStructure<User>>(structure,HttpStatus.FOUND);
+//			}
+//			throw new emailOrPassWordnotFound("email or pass not found");
+//		}
+//		throw new emailOrPassWordnotFound("email or pass not found");
+////		return null;
+//	 }
+	 public ResponseEntity<ResponseStructure<User>> login(String userEmail, String PassWord) {
+		    User Exemail = dao.findByemail(userEmail);
+		    if (Exemail != null) {
+		        System.out.println("User is not null");
+		        if (Exemail.getUserPass().equals(PassWord)) {
+		            System.out.println("Password matches");
+		            ResponseStructure<User> structure = new ResponseStructure<>();
+		            structure.setMessage("Login Successfully");
+		            structure.setStatus(HttpStatus.FOUND.value());
+		            structure.setData(Exemail);
+		            return new ResponseEntity<>(structure, HttpStatus.FOUND);
+		        } else {
+		           throw new emailOrPassWordnotFound("pass word is not found");
+		        }
+		    } else {
+		        System.out.println("User not found");
+		        ResponseStructure<User> structure = new ResponseStructure<>();
+		        structure.setMessage("User not found");
+		        structure.setStatus(HttpStatus.NOT_FOUND.value());
+		        return new ResponseEntity<>(structure, HttpStatus.NOT_FOUND);
+		    }
+		}
+
 }

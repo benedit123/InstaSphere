@@ -34,9 +34,9 @@ public class User {
 	@NotBlank(message = "user pass cannot be blank")
 	@NotNull(message = "user pass cannot be null")
 	@Pattern(
-	        regexp = "^(?=.[0-9])(?=.[a-z])(?=.[A-Z])(?=.[@#$%^&+=!])(?=\\S+$).{8,}$",
-	        message = "Password must be at least 8 characters long and include at least 1 digit, 1 lowercase letter, 1 uppercase letter, and 1 special character."
-	    )
+		    regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!])(?=\\S+$).{8,}$",
+		    message = "Password must be at least 8 characters long and include at least 1 digit, 1 lowercase letter, 1 uppercase letter, and 1 special character."
+		)
 	private String userPass;
 	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)

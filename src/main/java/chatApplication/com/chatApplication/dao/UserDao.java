@@ -26,6 +26,15 @@ public class UserDao {
 		}
     	return null;
 	}
+    public User findByemail(String email)
+    {
+    	User user= repo.findByEmail(email);
+    	if (user!=null)
+    	{
+			return user;
+		}
+    	return null;
+	}
     public User deleteUser(int userId)
     {
 		User user=findUser(userId);

@@ -26,7 +26,7 @@ public ResponseEntity<ResponseStructure<UserDto>> saveUser(@RequestBody User use
 	return service.saveUser(user);
 }
 @GetMapping
-public ResponseEntity<ResponseStructure<User>> findUser(@RequestParam int userId)
+public ResponseEntity<ResponseStructure<UserDto>> findUser(@RequestParam int userId)
 {
 	return service.findUser(userId);
 }
@@ -44,5 +44,10 @@ public ResponseEntity<ResponseStructure<User>> updateUser(@RequestBody User user
 public ResponseEntity<ResponseStructure<User>> assignaccountToUser(@RequestParam int accountId,@RequestParam int userId)
 {
 	return service.assignaccountToUser(accountId, userId);
+}
+@GetMapping("login")
+public ResponseEntity<ResponseStructure<User>> login(@RequestParam String email,@RequestParam String password)
+{
+	return service.login(email, password);
 }
 }
